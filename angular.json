@@ -28,9 +28,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.less",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
@@ -93,7 +96,8 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           }
         },
         "lint": {
@@ -124,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "local-shop"
+  "defaultProject": "local-shop",
+  "cli": {
+    "analytics": false
+  }
 }
