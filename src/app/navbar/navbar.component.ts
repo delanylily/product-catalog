@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import * as firebase from "firebase/auth";
 
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -10,17 +12,26 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
   styleUrls: ['./navbar.component.less']
 })
 export class NavbarComponent {
-  auth: any = getAuth()
-  constructor() {
+  auth: any = getAuth();
+  user: firebase.User;
+  //$user: Observable<firebase.User>;
+
+  constructor(private router: Router) {
+    this.checkLoginState();
+  }
+
+  checkLoginState(): void {
     this.auth.onAuthStateChanged((user) => {
-      console.log(user)
+      this.user = user;
     });
   }
 
   logout(): void {
-    this.auth = getAuth();
-    signOut(this.auth);
+    signOut(this.auth)
+      .then(() => {
+        this.router.navigate([''])
+      })
+      .catch(error => console.log(error));
   }
-
 }
 
