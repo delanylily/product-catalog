@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+
+import { getAuth } from "firebase/auth";
+import { AuthService } from '../login/services/auth.service';
 import * as firebase from "firebase/auth";
-
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { Observable } from 'rxjs';
-
 
 @Component({
   selector: 'bs-navbar',
@@ -14,9 +12,7 @@ import { Observable } from 'rxjs';
 export class NavbarComponent {
   auth: any = getAuth();
   user: firebase.User;
-  //$user: Observable<firebase.User>;
-
-  constructor(private router: Router) {
+  constructor(private authService: AuthService) {
     this.checkLoginState();
   }
 
@@ -27,11 +23,7 @@ export class NavbarComponent {
   }
 
   logout(): void {
-    signOut(this.auth)
-      .then(() => {
-        this.router.navigate([''])
-      })
-      .catch(error => console.log(error));
+    this.authService.logout();
   }
 }
 
