@@ -25,6 +25,7 @@ import { environment } from 'src/environments/environment';
 const auth = getAuth();
 import { initializeApp } from "firebase/app";
 import { UserService } from './services/user.service';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
 const app = initializeApp(environment.firebase);
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ const app = initializeApp(environment.firebase);
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
+    ProductFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,7 @@ const app = initializeApp(environment.firebase);
       { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
       { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
       { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard] },
+      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard] },
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard] },
     ]),
     NgbModule,
