@@ -15,15 +15,16 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from './login/services/auth.service';
-// import { AuthGuard } from './auth-guard';
+import { AuthGuard } from './auth-guard';
 import { getAuth } from "firebase/auth";
 import { HotToastModule } from '@ngneat/hot-toast';
 import { environment } from 'src/environments/environment';
-// import { AuthGuard, redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
+//import { AuthGuard, redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
 // const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 // const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 const auth = getAuth();
 import { initializeApp } from "firebase/app";
+import { UserService } from './services/user.service';
 const app = initializeApp(environment.firebase);
 @NgModule({
   declarations: [
@@ -50,12 +51,13 @@ const app = initializeApp(environment.firebase);
 
       { path: 'products', component: ProductsComponent },
       { path: 'shopping-cart', component: ShoppingCartComponent },
-      { path: 'check-out', component: CheckOutComponent },
-      { path: 'order-success', component: OrderSuccessComponent },
-      { path: 'my/orders', component: MyOrdersComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'admin/products', component: AdminProductsComponent },
-      { path: 'admin/orders', component: AdminOrdersComponent },
+
+      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
+      { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
+      { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
+      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard] },
+      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard] },
     ]),
     NgbModule,
     HotToastModule.forRoot(),
@@ -63,7 +65,8 @@ const app = initializeApp(environment.firebase);
   ],
   providers: [
     AuthService,
-    // AuthGuard
+    AuthGuard,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
