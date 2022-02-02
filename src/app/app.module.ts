@@ -15,7 +15,16 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from './login/services/auth.service';
-
+// import { AuthGuard } from './auth-guard';
+import { getAuth } from "firebase/auth";
+import { HotToastModule } from '@ngneat/hot-toast';
+import { environment } from 'src/environments/environment';
+// import { AuthGuard, redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
+// const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+// const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
+const auth = getAuth();
+import { initializeApp } from "firebase/app";
+const app = initializeApp(environment.firebase);
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,13 +36,18 @@ import { AuthService } from './login/services/auth.service';
     OrderSuccessComponent,
     MyOrdersComponent,
     AdminProductsComponent,
-    AdminOrdersComponent
+    AdminOrdersComponent,
   ],
   imports: [
     BrowserModule,
+    // provideFirebaseApp(() => initializeApp(environment.firebase)),
+    // provideAuth(() => getAuth()),
     NgbModule,
     RouterModule.forRoot([
+      // { path: '', component: HomeComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: '', component: HomeComponent },
+
+
       { path: 'products', component: ProductsComponent },
       { path: 'shopping-cart', component: ShoppingCartComponent },
       { path: 'check-out', component: CheckOutComponent },
@@ -43,10 +57,13 @@ import { AuthService } from './login/services/auth.service';
       { path: 'admin/products', component: AdminProductsComponent },
       { path: 'admin/orders', component: AdminOrdersComponent },
     ]),
-    NgbModule
+    NgbModule,
+    HotToastModule.forRoot(),
+
   ],
   providers: [
-    AuthService
+    AuthService,
+    // AuthGuard
   ],
   bootstrap: [AppComponent]
 })

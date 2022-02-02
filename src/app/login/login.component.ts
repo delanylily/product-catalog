@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 
 import { AuthService } from './services/auth.service';
 
@@ -9,10 +11,19 @@ import { AuthService } from './services/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router, private toast: HotToastService) {
   }
 
   login(): void {
-    this.authService.login();
+    this.authService.signIn().pipe(
+      this.toast.observe({
+        success: 'Logged in successfully',
+        loading: 'Logging in...',
+        error: ({ message }) => `There was an erro: ${message}`
+      })
+    ).subscribe(() => {
+      this.router.navigate(['/home']);
+    })
+    //  this.authService.login();
   }
 }

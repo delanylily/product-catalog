@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { getAuth, signInWithRedirect, signOut } from 'firebase/auth';
+import { Auth, getAuth, signInWithRedirect, signOut } from 'firebase/auth';
 import * as firebase from "firebase/auth";
 import { Router } from '@angular/router';
-
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,12 @@ export class AuthService {
   constructor(private router: Router) {
   }
 
-  login(): void {
-    signInWithRedirect(this.auth, new firebase.GoogleAuthProvider());
+  signIn(): Observable<any> {
+    return from(signInWithRedirect(this.auth, new firebase.GoogleAuthProvider()))
+  }
+
+  signOut(): Observable<any> {
+    return from(this.auth.signOut());
   }
 
   logout(): void {
