@@ -5,7 +5,7 @@
     "price": 26,
     "colour": "red",
     "size": "medium",
-    "image": "assets/images/dresses/dress1.jpeg"
+    "image": "assets/images/items/dress1.jpeg"
   },
   {
     "item": "dress",
@@ -13,7 +13,7 @@
     "price": 20,
     "colour": "green",
     "size": "small",
-    "image": "assets/images/dresses/dress2.jpeg"
+    "image": "assets/images/items/dress2.jpeg"
   },
   {
     "item": "coat",
@@ -21,7 +21,7 @@
     "price": 32,
     "colour": "navy",
     "size": "medium",
-    "image": "assets/images/coats/coat1.jpeg"
+    "image": "assets/images/items/coat1.jpeg"
   },
   {
     "item": "coat",
@@ -29,6 +29,127 @@
     "price": 15,
     "colour": "green",
     "size": "medium",
-    "image": "assets/images/coats/coat2.jpeg"
+    "image": "assets/images/items/coat2.jpeg"
+  },
+  {
+    "item": "coat",
+    "id": "coat3",
+    "price": 32,
+    "colour": "navy",
+    "size": "medium",
+    "image": "assets/images/items/coat3.jpeg"
+  },
+  {
+    "item": "coat",
+    "id": "coat4",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/coat4.jpeg"
+  },
+  {
+    "item": "shirt",
+    "id": "shirt1",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/shirt1.jpeg"
+  },
+  {
+    "item": "shirt",
+    "id": "shirt2",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/shirt2.jpeg"
+  },
+  {
+    "item": "shirt",
+    "id": "shirt3",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/shirt3.jpeg"
+  },
+  {
+    "item": "shirt",
+    "id": "shirt4",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/shirt4.jpeg"
+  },
+  {
+    "item": "shirt",
+    "id": "shirt5",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/shirt5.jpeg"
+  },
+  {
+    "item": "shirt",
+    "id": "shirt6",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/shirt6.jpeg"
+  },
+  {
+    "item": "sweater",
+    "id": "sweater1",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/sweater1.jpeg"
+  },
+  {
+    "item": "sweater",
+    "id": "sweater2",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/sweater2.jpeg"
+  },
+  {
+    "item": "sweater",
+    "id": "sweater3",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/sweater3.jpeg"
+  },
+  {
+    "item": "sweater",
+    "id": "sweater4",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/sweater4.jpeg"
+  },
+  {
+    "item": "sweater",
+    "id": "sweater5",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/sweater5.jpeg"
+  },
+  {
+    "item": "pants",
+    "id": "pants1",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/pants1.jpeg"
+  },
+  {
+    "item": "pants",
+    "id": "pants2",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/items/pants2.jpeg"
   }
 ]
+
