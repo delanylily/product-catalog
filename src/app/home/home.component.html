@@ -1,5 +1,11 @@
-<div class="item-box">
-  <div *ngFor="let item of apparel">
-    <img src="{{item.image}}">
+<div class="content-wrap">
+  <search-filter [placeholder]="'Search'" [value]="''" (changeEvent)="onSearchUpdated($event)" ></search-filter>
+  <div class="item-box">
+    <div  *ngFor="let item of apparel let i = index">
+      <img src="{{item.image}}">
+      <p class="item-caption">{{item.id}}</p>
+      <p class="item-caption">€ {{item.price}}</p>
+    </div>
   </div>
 </div>
+
