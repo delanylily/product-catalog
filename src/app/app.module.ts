@@ -25,8 +25,9 @@ import { environment } from 'src/environments/environment';
 const auth = getAuth();
 import { initializeApp } from "firebase/app";
 import { UserService } from './services/user.service';
-import { ProductFormComponent } from './admin/product-form/product-form.component';
-const app = initializeApp(environment.firebase);
+import { ProductFormComponent } from './products/product-form/product-form.component';
+import { CategoryService } from './category.service';
+const app = initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,15 +52,25 @@ const app = initializeApp(environment.firebase);
       { path: '', component: HomeComponent },
 
 
-      { path: 'products', component: ProductsComponent },
+      {
+        path: 'products', component: ProductsComponent,
+        children: [
+          {
+            path: 'new',
+            component: ProductFormComponent
+          }
+        ]
+
+      },
+
+      // { path: 'new-product', component: ProductFormComponent, canActivate: [AuthGuard] },
       { path: 'shopping-cart', component: ShoppingCartComponent },
       { path: 'login', component: LoginComponent },
 
-      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
+      { path: 'check-out', component: CheckOutComponent },
       { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
       { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
       { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard] },
-      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard] },
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard] },
     ]),
     NgbModule,
@@ -69,7 +80,8 @@ const app = initializeApp(environment.firebase);
   providers: [
     AuthService,
     AuthGuard,
-    UserService
+    UserService,
+    CategoryService
   ],
   bootstrap: [AppComponent]
 })
