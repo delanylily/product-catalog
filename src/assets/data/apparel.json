@@ -1,0 +1,34 @@
+[
+  {
+    "item": "dress",
+    "id": "dress1",
+    "price": 26,
+    "colour": "red",
+    "size": "medium",
+    "image": "assets/images/dresses/dress1.jpeg"
+  },
+  {
+    "item": "dress",
+    "id": "dress2",
+    "price": 20,
+    "colour": "green",
+    "size": "small",
+    "image": "assets/images/dresses/dress2.jpeg"
+  },
+  {
+    "item": "coat",
+    "id": "coat1",
+    "price": 32,
+    "colour": "navy",
+    "size": "medium",
+    "image": "assets/images/coats/coat1.jpeg"
+  },
+  {
+    "item": "coat",
+    "id": "coat2",
+    "price": 15,
+    "colour": "green",
+    "size": "medium",
+    "image": "assets/images/coats/coat2.jpeg"
+  }
+]

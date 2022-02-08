@@ -25,8 +25,9 @@ import { environment } from 'src/environments/environment';
 const auth = getAuth();
 import { initializeApp } from "firebase/app";
 import { UserService } from './services/user.service';
-import { ProductFormComponent } from './products/product-form/product-form.component';
 import { CategoryService } from './category.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ProductFormComponent } from './products/product-form/product-form.component';
 const app = initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ const app = initializeApp(environment.firebaseConfig);
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideAuth(() => getAuth()),
     NgbModule,
@@ -81,7 +83,7 @@ const app = initializeApp(environment.firebaseConfig);
     AuthService,
     AuthGuard,
     UserService,
-    CategoryService
+    CategoryService,
   ],
   bootstrap: [AppComponent]
 })
