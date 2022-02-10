@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-interface Item {
-  item: string;
-  id: string;
-  price: number;
-  colour: string;
-  size: string;
-  image: string;
+import { Item } from '../interfaces/item';
+import { CategoryService } from '../category.service';
 
-}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,14 +11,12 @@ export class HomeComponent implements OnInit {
   apparel: Item[];
   filterText: string;
   newArray: any;
-  constructor(private http: HttpClient) { }
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.http.get<Item[]>('./assets/data/apparel.json')
-      .subscribe((data: Item[]) => {
-        this.apparel = data;
-        console.log(this.apparel, 'apparel')
-      })
+    this.categoryService.filterItems().subscribe((data: Item[]) => {
+      this.apparel = data;
+    })
   }
 
   onSearchUpdated(event): void {
@@ -38,14 +29,7 @@ export class HomeComponent implements OnInit {
       }
       if (this.newArray !== undefined) {
         this.apparel = this.newArray;
-
       }
-      console.log(this.apparel)
     })
   }
-
-  // filterItems(): void {
-
-  // }
-
 }
