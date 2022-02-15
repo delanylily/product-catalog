@@ -29,6 +29,7 @@ import { CategoryService } from './category.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { FormsModule } from '@angular/forms';
 const app = initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
@@ -44,11 +45,12 @@ const app = initializeApp(environment.firebaseConfig);
     AdminOrdersComponent,
     ProductFormComponent,
     SearchFilterComponent,
-    SearchFilterComponent
+    SearchFilterComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideAuth(() => getAuth()),
     NgbModule,

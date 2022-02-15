@@ -8,28 +8,52 @@ import { CategoryService } from '../category.service';
   styleUrls: ['./home.component.less']
 })
 export class HomeComponent implements OnInit {
-  apparel: Item[];
+  // apparel: Item[];\
+  apparel: any;
   filterText: string;
   newArray: any;
+  category = '';
+  categories = [];
+  filterButtonValue: string;
+  items: any;
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.categoryService.filterItems().subscribe((data: Item[]) => {
-      this.apparel = data;
+      if (data) {
+        this.items = data;
+        this.apparel = data;
+      }
     })
   }
 
+  filterCategory(value: any) {
+    this.filterButtonValue = value;
+    this.onSearchUpdated(this.filterButtonValue);
+  }
+
+  search(): void {
+    if (this.filterText) {
+      this.items = this.newArray;
+      console.log(this.apparel)
+    } else {
+      this.categoryService.filterItems().subscribe((data: Item[]) => {
+        if (data) {
+          this.items = data;
+        }
+      })
+    }
+  }
+
   onSearchUpdated(event): void {
-    console.log(event, 'home')
     this.filterText = event;
     this.newArray = [];
-    this.newArray = this.apparel.filter((item) => {
-      if (this.filterText === item.item) {
-        this.newArray.push(item)
-      }
-      if (this.newArray !== undefined) {
-        this.apparel = this.newArray;
-      }
-    })
+    if (this.filterText !== "") {
+      this.newArray = this.apparel.filter(item => this.filterText === item.item || this.filterText === item.colour)
+      this.search();
+    }
+    else {
+      this.search();
+    }
   }
 }

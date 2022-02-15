@@ -1,7 +1,40 @@
 <div class="content-wrap">
-  <search-filter [placeholder]="'Search'" [value]="''" (changeEvent)="onSearchUpdated($event)" ></search-filter>
+
+
+  <div class="row nav-items">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active">
+              <button class="nav-link" (click)="search()">All</button>
+              <!-- <span data-feather="home"></span>
+              All <span class="sr-only">(current)</span> -->
+            </a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="filterCategory('dress')">Dresses</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="filterCategory('coat')">Coats</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="filterCategory('shirt')">Shirts</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="filterCategory('sweater')">Sweaters</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+  </div>
+
+
+  <search-filter class="search" [placeholder]="'Search'" [value]="''" (changeEvent)="onSearchUpdated($event)" ></search-filter>
+  <!-- <input type="text" [(ngModel)]= category [placeholder]="'Search'"> -->
   <div class="item-box">
-    <div  *ngFor="let item of apparel let i = index">
+    <div  *ngFor="let item of items let i = index">
       <img src="{{item.image}}">
       <p class="item-caption">{{item.id}}</p>
       <p class="item-caption">€ {{item.price}}</p>
