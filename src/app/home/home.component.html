@@ -8,8 +8,7 @@
           <li class="nav-item">
             <a class="nav-link active">
               <button class="nav-link" (click)="search()">All</button>
-              <!-- <span data-feather="home"></span>
-              All <span class="sr-only">(current)</span> -->
+
             </a>
           </li>
           <li class="nav-item">
@@ -35,9 +34,10 @@
   <!-- <input type="text" [(ngModel)]= category [placeholder]="'Search'"> -->
   <div class="item-box">
     <div  *ngFor="let item of items let i = index">
-      <img src="{{item.image}}">
+      <img src="{{item.imageUrl}}">
       <p class="item-caption">{{item.id}}</p>
       <p class="item-caption">€ {{item.price}}</p>
+      <button (click)="itemLiked(i)">LIKE!</button>
     </div>
   </div>
 </div>

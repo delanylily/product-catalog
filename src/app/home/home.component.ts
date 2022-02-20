@@ -9,21 +9,26 @@ import { CategoryService } from '../category.service';
 })
 export class HomeComponent implements OnInit {
   // apparel: Item[];\
-  apparel: any;
+  filteredItems: any;
   filterText: string;
   newArray: any;
   category = '';
   categories = [];
   filterButtonValue: string;
   items: any;
+  likedItems = [];
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.categoryService.filterItems().subscribe((data: Item[]) => {
-      if (data) {
-        this.items = data;
-        this.apparel = data;
-      }
+    this.categoryService.getResults().subscribe((clothes) => {
+      this.items = clothes;
+      this.filteredItems = this.items;
+    })
+  }
+
+  getItems(): void {
+    this.categoryService.getResults().subscribe((clothes) => {
+      this.items = clothes;
     })
   }
 
@@ -32,28 +37,28 @@ export class HomeComponent implements OnInit {
     this.onSearchUpdated(this.filterButtonValue);
   }
 
+  itemLiked(index): void {
+    this.likedItems.push(this.items[index])
+    console.log(this.likedItems, 'liked')
+  }
+
   search(): void {
     if (this.filterText) {
       this.items = this.newArray;
-      console.log(this.apparel)
     } else {
-      this.categoryService.filterItems().subscribe((data: Item[]) => {
-        if (data) {
-          this.items = data;
-        }
-      })
+      this.getItems();
     }
   }
 
   onSearchUpdated(event): void {
     this.filterText = event;
     this.newArray = [];
-    if (this.filterText !== "") {
-      this.newArray = this.apparel.filter(item => this.filterText === item.item || this.filterText === item.colour)
-      this.search();
-    }
-    else {
-      this.search();
-    }
+    // if (this.filterText !== "") {
+    this.newArray = this.items.filter(item => this.filterText === item.category || this.filterText === item.colour)
+    this.search();
+    // }
+    // else {
+    //   this.search();
+    // }
   }
 }
