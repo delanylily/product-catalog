@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Item } from '../interfaces/item';
 import { CategoryService } from '../category.service';
+import { getDatabase, ref, set } from "firebase/database";
 
 @Component({
   selector: 'app-home',
@@ -38,8 +39,19 @@ export class HomeComponent implements OnInit {
   }
 
   itemLiked(index): void {
-    this.likedItems.push(this.items[index])
+    this.likedItems.push(this.items[index]);
     console.log(this.likedItems, 'liked')
+    this.writeUserData();
+
+
+  }
+  writeUserData(userId, name, email, imageUrl) {
+    const db = getDatabase();
+    set(ref(db, 'users/' + userId), {
+      username: name,
+      email: email,
+      profile_picture: imageUrl
+    });
   }
 
   search(): void {
@@ -53,12 +65,7 @@ export class HomeComponent implements OnInit {
   onSearchUpdated(event): void {
     this.filterText = event;
     this.newArray = [];
-    // if (this.filterText !== "") {
     this.newArray = this.items.filter(item => this.filterText === item.category || this.filterText === item.colour)
     this.search();
-    // }
-    // else {
-    //   this.search();
-    // }
   }
 }

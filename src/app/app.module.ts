@@ -30,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { FormsModule } from '@angular/forms';
+import { FavouritesComponent } from './favourites/favourites.component';
 const app = initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ const app = initializeApp(environment.firebaseConfig);
     ProductFormComponent,
     SearchFilterComponent,
     SearchFilterComponent,
+    FavouritesComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +74,7 @@ const app = initializeApp(environment.firebaseConfig);
 
       // { path: 'new-product', component: ProductFormComponent, canActivate: [AuthGuard] },
       { path: 'shopping-cart', component: ShoppingCartComponent },
+      { path: 'favourites', component: FavouritesComponent },
       { path: 'login', component: LoginComponent },
 
       { path: 'check-out', component: CheckOutComponent },
