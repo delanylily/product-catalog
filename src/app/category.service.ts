@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { child, get, getDatabase, onValue, orderByChild, push, query, ref, set } from 'firebase/database';
+import { child, get, getDatabase, onValue, orderByChild, push, query, ref, set, update } from 'firebase/database';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Item } from './interfaces/item';
@@ -22,7 +22,6 @@ export class CategoryService {
   childKey: any;
   clothes = new Subject();
   app = initializeApp(environment.firebaseConfig);
-
 
   constructor(private readonly http: HttpClient) {
     this.clothingData = new BehaviorSubject<any>([]);
@@ -45,7 +44,6 @@ export class CategoryService {
   }
 
   getResults(): Subject<any> {
-    //  console.log(this.clothes, 'clote')
     onValue(this.dbRef, (snapshot) => {
       if (snapshot !== undefined) {
         snapshot.forEach((childSnapshot) => {
@@ -60,26 +58,23 @@ export class CategoryService {
     return this.clothes;
   }
 
-  // filterItems(): Observable<any> {
-  //   onValue(this.dbRef, (snapshot) => {
-  //     snapshot.forEach((childSnapshot) => {
-  //       this.childKey = childSnapshot.key;
-  //       this.clothingData = childSnapshot.val();
-  //       console.log(this.clothingData)
-  //     })
-  //   },
-  //     {
-  //       onlyOnce: true
-  //     })
-  //   return this.clothingData;
-
-  //   //  return this.http.get
-  //   //  return this.http.get<Item[]>(this.clothingData)
-
-  //   // return this.http.get<Item[]>('./assets/data/apparel.json')
+  //working
+  // likeItem(like: boolean, index: number) {
+  //   set(ref(this.db, 'Items/' + index), {
+  //     like: like
+  //   });
   // }
 
+  likeItem(itemData: any, index: number) {
 
+    const newItemKey = push(child(ref(this.db), 'Items'))
+    const updates = {};
+
+    //updates['/Items/' + newItemKey] = itemData;
+    updates['/Items/' + index + newItemKey] = itemData;
+
+    return update(ref(this.db), updates);
+  }
 
 
 

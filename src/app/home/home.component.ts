@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.categoryService.getResults().subscribe((clothes) => {
       this.items = clothes;
+      console.log(this.items, 'items')
       this.filteredItems = this.items;
     })
   }
@@ -39,12 +40,22 @@ export class HomeComponent implements OnInit {
   }
 
   itemLiked(index): void {
+    const itemData = {
+      category: this.items[index].category,
+      color: this.items[index].color,
+      id: this.items[index].id,
+      imageUrl: this.items[index].imageUrl,
+      like: true,
+      size: this.items[index].size
+    }
+    console.log(itemData, 'data')
+
     this.likedItems.push(this.items[index]);
     console.log(this.likedItems, 'liked')
-    this.writeUserData();
-
-
+    this.categoryService.likeItem(itemData, index)
+    //  this.writeUserData();
   }
+
   writeUserData(userId, name, email, imageUrl) {
     const db = getDatabase();
     set(ref(db, 'users/' + userId), {
