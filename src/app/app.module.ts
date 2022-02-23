@@ -53,8 +53,6 @@ const app = initializeApp(environment.firebaseConfig);
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    // provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // provideAuth(() => getAuth()),
     NgbModule,
     RouterModule.forRoot([
       // { path: '', component: HomeComponent, ...canActivate(redirectUnauthorizedToLogin) },

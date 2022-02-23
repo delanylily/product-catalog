@@ -67,11 +67,12 @@ export class CategoryService {
 
   likeItem(itemData: any, index: number) {
 
-    const newItemKey = push(child(ref(this.db), 'Items'))
+    const newItemKey = push(child(ref(this.db), 'Items')).ref;
     const updates = {};
 
-    //updates['/Items/' + newItemKey] = itemData;
-    updates['/Items/' + index + newItemKey] = itemData;
+    // updates['/Items/' + index + '/' + newItemKey] = itemData;
+        updates['/Items/' + index] = itemData;
+
 
     return update(ref(this.db), updates);
   }
