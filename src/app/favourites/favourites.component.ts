@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { getDatabase, ref, set } from "firebase/database";
+import { CategoryService } from '../category.service';
 
 @Component({
   selector: 'app-favourites',
@@ -7,20 +8,28 @@ import { getDatabase, ref, set } from "firebase/database";
   styleUrls: ['./favourites.component.less']
 })
 export class FavouritesComponent implements OnInit {
-
-  constructor() { }
+  likedItems = [];
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
+    // this.categoryService.getResults().subscribe((items => {
+    //   items.map((items => {
+    //     if (items.like === true) {
+    //       this.likedItems.push(items);
+    //       console.log(this.likedItems, 'fav')
+    //     }
+    //   }))
+    // }))
 
 
-    function writeUserData(userId, name, email, imageUrl) {
-      const db = getDatabase();
-      set(ref(db, 'users/' + userId), {
-        username: name,
-        email: email,
-        profile_picture: imageUrl
-      });
-    }
+    this.categoryService.getResults().subscribe((items) => {
+      const allItems = items;
+      allItems.filter((item => {
+        if (item.like) {
+          this.likedItems.push(item);
+        }
+        console.log(this.likedItems, 'sdfs')
+      }))
+    })
   }
-
 }

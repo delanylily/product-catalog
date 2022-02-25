@@ -1,3 +1,7 @@
-<p>
-  favourites works!
-</p>
+<div class="fav-items-box">
+  <div *ngFor="let item of likedItems let i = index">
+    <img src="{{item.imageUrl}}">
+    <p class="item-caption">{{item.id}}</p>
+    <p class="item-caption">€ {{item.price}}</p>
+  </div>
+</div>

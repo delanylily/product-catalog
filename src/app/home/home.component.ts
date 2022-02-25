@@ -18,12 +18,19 @@ export class HomeComponent implements OnInit {
   filterButtonValue: string;
   items: any;
   likedItems = [];
+  likeItem: boolean = false;
+  indexActive: number = 0;
+  updatedData: any;
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.categoryService.getResults().subscribe((clothes) => {
       this.items = clothes;
-      console.log(this.items, 'items')
+      this.items.map((item => {
+        this.likeItem = item.like;
+        console.log(this.items, 'items')
+      }))
+
       this.filteredItems = this.items;
     })
   }
@@ -40,30 +47,22 @@ export class HomeComponent implements OnInit {
   }
 
   itemLiked(index): void {
-    const itemData = {
+    this.indexActive = index;
+    this.likeItem = !this.likeItem;
+    this.updatedData = {
       category: this.items[index].category,
       color: this.items[index].color,
       id: this.items[index].id,
       imageUrl: this.items[index].imageUrl,
-      like: true,
+      like: this.likeItem,
       size: this.items[index].size
     }
-    console.log(itemData, 'data')
 
-    this.likedItems.push(this.items[index]);
-    console.log(this.likedItems, 'liked')
-    this.categoryService.likeItem(itemData, index)
-    //  this.writeUserData();
+    //this.likedItems.push(this.items[index]);
+    //console.log(this.likedItems, 'liked')
+    this.categoryService.updateItem(this.updatedData, index)
   }
 
-  writeUserData(userId, name, email, imageUrl) {
-    const db = getDatabase();
-    set(ref(db, 'users/' + userId), {
-      username: name,
-      email: email,
-      profile_picture: imageUrl
-    });
-  }
 
   search(): void {
     if (this.filterText) {

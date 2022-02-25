@@ -58,26 +58,18 @@ export class CategoryService {
     return this.clothes;
   }
 
-  //working
-  // likeItem(like: boolean, index: number) {
-  //   set(ref(this.db, 'Items/' + index), {
-  //     like: like
-  //   });
-  // }
-
-  likeItem(itemData: any, index: number) {
-
-    const newItemKey = push(child(ref(this.db), 'Items')).ref;
+  updateItem(itemData: any, index: number) {
     const updates = {};
-
-    // updates['/Items/' + index + '/' + newItemKey] = itemData;
-        updates['/Items/' + index] = itemData;
-
-
-    return update(ref(this.db), updates);
+    updates['/Items/' + index] = itemData;
+    return update(ref(this.db), updates)
+      .then(() => {
+        console.log('saved succesfully')
+        this.getResults();
+      })
+      .catch((error) => {
+        console.log(error, 'like failed')
+      })
   }
-
-
 
   getCategories(items: any): any {
     onValue(this.dbRef, (snapshot) => {
