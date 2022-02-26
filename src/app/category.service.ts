@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment';
 import { Item } from './interfaces/item';
 import { Categories } from './models/categories';
 import * as firebase from "firebase/auth";
-import { data } from 'jquery';
+import { categories, colors, sizes } from './app.constants';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,9 @@ import { data } from 'jquery';
 export class CategoryService {
   db: any;
   dbRef: any;
-  categories: Categories
-  // clothingData: any;
+  categories: Array<{ value: string, name: string }>;
+  colors: Array<{ value: string, name: string }>;
+  sizes: Array<{ value: string, name: string }>;
   clothingData: BehaviorSubject<any>;
   clothingData$: Observable<any>;
   childKey: any;
@@ -24,6 +26,9 @@ export class CategoryService {
   app = initializeApp(environment.firebaseConfig);
 
   constructor(private readonly http: HttpClient) {
+    this.categories = categories;
+    this.colors = colors;
+    this.sizes = sizes;
     this.clothingData = new BehaviorSubject<any>([]);
     this.clothingData$ = this.clothingData.asObservable();
     this.db = getDatabase();

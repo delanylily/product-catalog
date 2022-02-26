@@ -29,7 +29,8 @@ import { CategoryService } from './category.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddItemComponent } from './add-item/add-item.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 const app = initializeApp(environment.firebaseConfig);
 @NgModule({
@@ -47,11 +48,13 @@ const app = initializeApp(environment.firebaseConfig);
     ProductFormComponent,
     SearchFilterComponent,
     SearchFilterComponent,
-    FavouritesComponent
+    FavouritesComponent,
+    AddItemComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule,
     NgbModule,
     RouterModule.forRoot([
@@ -73,6 +76,7 @@ const app = initializeApp(environment.firebaseConfig);
       // { path: 'new-product', component: ProductFormComponent, canActivate: [AuthGuard] },
       { path: 'shopping-cart', component: ShoppingCartComponent },
       { path: 'favourites', component: FavouritesComponent },
+      { path: 'add-item', component: AddItemComponent },
       { path: 'login', component: LoginComponent },
 
       { path: 'check-out', component: CheckOutComponent },

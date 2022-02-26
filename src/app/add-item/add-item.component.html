@@ -1,0 +1,17 @@
+<form [formGroup]="addItemForm" (ngSubmit)="addItem()" >
+  <label for="category">Category</label>
+  <select class="form-control" name="category" formControlName="category">
+    <option *ngFor="let category of categories" [value]="category.value">{{ category.name}}</option>
+  </select>
+  <label for="color">Colour</label>
+  <select class="form-control" name="color" formControlName="color">
+    <option *ngFor="let color of colors" [value]="color.value">{{ color.name}}</option>
+  </select>
+  <label for="imageUrl">Image URL</label>
+  <input class="form-control" type="text" formControlName="imageUrl">
+  <label for="size">Size</label>
+  <select class="form-control" name="size" formControlName="size">
+    <option *ngFor="let size of sizes" [value]="size.value">{{ size.name}}</option>
+  </select>
+  <button class="btn btn-primary" type="submit">Add item</button>
+</form>
