@@ -10,7 +10,6 @@ import { getDatabase, ref, set } from "firebase/database";
 })
 export class HomeComponent implements OnInit {
   // apparel: Item[];\
-  filteredItems: any;
   filterText: string;
   newArray: any;
   category = '';
@@ -21,17 +20,16 @@ export class HomeComponent implements OnInit {
   likeItem: boolean = false;
   indexActive: number = 0;
   updatedData: any;
+  likeToggle: boolean;
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.categoryService.getResults().subscribe((clothes) => {
       this.items = clothes;
       this.items.map((item => {
-        this.likeItem = item.like;
+        this.likeToggle = item.like;
         console.log(this.items, 'items')
       }))
-
-      this.filteredItems = this.items;
     })
   }
 
@@ -47,20 +45,9 @@ export class HomeComponent implements OnInit {
   }
 
   itemLiked(index): void {
-    this.indexActive = index;
-    this.likeItem = !this.likeItem;
-    this.updatedData = {
-      category: this.items[index].category,
-      color: this.items[index].color,
-      id: this.items[index].id,
-      imageUrl: this.items[index].imageUrl,
-      like: this.likeItem,
-      size: this.items[index].size
-    }
-
-    //this.likedItems.push(this.items[index]);
-    //console.log(this.likedItems, 'liked')
-    this.categoryService.updateItem(this.updatedData, index)
+    this.items[index].like = !this.items[index].like;
+    this.likeToggle = this.items[index].like;
+    this.categoryService.updateItem(this.items, index, this.likeToggle)
   }
 
 

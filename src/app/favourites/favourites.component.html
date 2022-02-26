@@ -3,5 +3,6 @@
     <img src="{{item.imageUrl}}">
     <p class="item-caption">{{item.id}}</p>
     <p class="item-caption">€ {{item.price}}</p>
+    <i (click)="itemRemoved(i)" class="custom-icons" [ngClass]="item.like === true ? 'i-heart-fill' :  'i-heart'"></i>
   </div>
 </div>

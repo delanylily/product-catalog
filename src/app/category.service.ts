@@ -58,7 +58,16 @@ export class CategoryService {
     return this.clothes;
   }
 
-  updateItem(itemData: any, index: number) {
+  updateItem(items: any, index: number, likeToggle: boolean) {
+    console.log(items, 'cl')
+    const itemData = {
+      category: items[index].category,
+      color: items[index].color,
+      id: items[index].id,
+      imageUrl: items[index].imageUrl,
+      like: items[index].like = likeToggle,
+      size: items[index].size
+    }
     const updates = {};
     updates['/Items/' + index] = itemData;
     return update(ref(this.db), updates)

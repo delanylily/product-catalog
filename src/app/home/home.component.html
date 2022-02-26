@@ -28,11 +28,11 @@
   <search-filter class="search" [placeholder]="'Search'" [value]="''" (changeEvent)="onSearchUpdated($event)">
   </search-filter>
   <div class="item-box">
-    <div *ngFor="let item of items let i = index">
+    <div class="item-card" *ngFor="let item of items let i = index">
       <img src="{{item.imageUrl}}">
       <p class="item-caption">{{item.id}}</p>
       <p class="item-caption">€ {{item.price}}</p>
-      <!-- <i (click)="itemLiked(i)" [ngClass]="{'heart-fill' : likeItem }" class="custom-icons i-heart"></i> -->
+      <!-- <i (click)="itemLiked(i)" class="custom-icons" [ngClass]="likeToggle === true ? 'i-heart-fill' :  'i-heart'"></i> -->
       <i (click)="itemLiked(i)" class="custom-icons" [ngClass]="item.like === true ? 'i-heart-fill' :  'i-heart'"></i>
     </div>
   </div>
