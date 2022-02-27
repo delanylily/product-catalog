@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../category.service';
 
 @Component({
@@ -18,17 +18,19 @@ export class AddItemComponent implements OnInit {
     this.sizes = categoryService.sizes;
     console.log(this.categories, 'categories')
     this.addItemForm = new FormGroup({
-      category: new FormControl(''),
-      color: new FormControl(''),
-      imageUrl: new FormControl(''),
-      size: new FormControl('')
+      category: new FormControl('', [Validators.required]),
+      color: new FormControl('', [Validators.required]),
+      imageUrl: new FormControl('', [Validators.required]),
+      size: new FormControl('', [Validators.required])
     })
   }
 
   ngOnInit() {
   }
 
-  addItem(): void {
-    console.log(this.addItemForm.value, 'form');
+  addItem({ value, valid }: { value: any, valid: boolean }): void {
+    if (valid) {
+      this.categoryService.addItem(value);
+    }
   }
 }

@@ -1,17 +1,25 @@
-<form [formGroup]="addItemForm" (ngSubmit)="addItem()" >
+<form [formGroup]="addItemForm" (ngSubmit)="addItem(addItemForm)">
   <label for="category">Category</label>
-  <select class="form-control" name="category" formControlName="category">
+  <select id="category" class="form-control" name="category" formControlName="category">
     <option *ngFor="let category of categories" [value]="category.value">{{ category.name}}</option>
   </select>
+  <p class="error-text" *ngIf="addItemForm.controls.category.invalid && addItemForm.controls.category.touched">Category
+    selection is required</p>
   <label for="color">Colour</label>
   <select class="form-control" name="color" formControlName="color">
     <option *ngFor="let color of colors" [value]="color.value">{{ color.name}}</option>
   </select>
+  <p class="error-text" *ngIf="addItemForm.controls.color.touched && addItemForm.controls.color.invalid">Colour
+    selection is required</p>
   <label for="imageUrl">Image URL</label>
   <input class="form-control" type="text" formControlName="imageUrl">
+  <p class="error-text" *ngIf="addItemForm.controls.imageUrl.touched && addItemForm.controls.imageUrl.invalid">Image url
+    is required</p>
   <label for="size">Size</label>
   <select class="form-control" name="size" formControlName="size">
-    <option *ngFor="let size of sizes" [value]="size.value">{{ size.name}}</option>
+    <option *ngFor="let size of sizes" [value]="size.value">{{ size.name }}</option>
   </select>
-  <button class="btn btn-primary" type="submit">Add item</button>
+  <p class="error-text" *ngIf="addItemForm.controls.size.invalid && addItemForm.controls.size.touched">Size selection is
+    required</p>
+  <button [ngClass]="{'disabled': !addItemForm.valid}" class="btn btn-primary" type="submit">Add item</button>
 </form>

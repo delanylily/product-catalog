@@ -22,6 +22,7 @@ export class CategoryService {
   clothingData: BehaviorSubject<any>;
   clothingData$: Observable<any>;
   childKey: any;
+  newIndex: number;
   clothes = new Subject();
   app = initializeApp(environment.firebaseConfig);
 
@@ -82,6 +83,33 @@ export class CategoryService {
       })
       .catch((error) => {
         console.log(error, 'like failed')
+      })
+  }
+
+
+  addItem(item): void {
+    onValue(this.dbRef, (snapshot) => {
+      if (snapshot !== undefined) {
+        snapshot.forEach((childSnapshot) => {
+          this.childKey = childSnapshot.key;
+          const items = childSnapshot.val();
+          if (items !== undefined) {
+            this.newIndex = items.length;
+            set(ref(this.db, 'Items/' + 0), {
+              category: item.category,
+              color: item.color,
+              id: 'coat1',
+              imageUrl: item.imageUrl,
+              size: item.size,
+              like: false
+            })
+          }
+          console.log(items, 'clottthes', this.newIndex);
+        })
+      }
+    },
+      {
+        onlyOnce: true
       })
   }
 
