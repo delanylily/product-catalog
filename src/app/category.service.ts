@@ -9,6 +9,7 @@ import { Categories } from './models/categories';
 import * as firebase from "firebase/auth";
 import { categories, colors, sizes } from './app.constants';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class CategoryService {
   clothes = new Subject();
   app = initializeApp(environment.firebaseConfig);
 
-  constructor(private readonly http: HttpClient) {
+  constructor(private toast: HotToastService) {
     this.categories = categories;
     this.colors = colors;
     this.sizes = sizes;
@@ -112,6 +113,8 @@ export class CategoryService {
         onlyOnce: true
       })
   }
+
+
 
   getCategories(items: any): any {
     onValue(this.dbRef, (snapshot) => {

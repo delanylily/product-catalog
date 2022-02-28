@@ -12,7 +12,17 @@ export class FavouritesComponent implements OnInit {
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.getResults();
+    // this.getResults();
+    this.categoryService.getResults().subscribe((items) => {
+      const allItems = items;
+      allItems.filter((item => {
+        if (item.like) {
+          this.likedItems = [];
+          this.likedItems.push(item);
+        }
+        console.log(this.likedItems, 'sdfs')
+      }))
+    })
   }
 
   getResults(): void {
@@ -23,7 +33,6 @@ export class FavouritesComponent implements OnInit {
           this.likedItems = [];
           this.likedItems.push(item);
         }
-        console.log(this.likedItems, 'sdfs')
       }))
     })
   }
