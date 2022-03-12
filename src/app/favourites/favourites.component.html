@@ -1,8 +1,14 @@
 <div class="fav-items-box">
+  <p *ngIf="isFetching">Loading...</p>
+  <ng-container *ngIf="likedItems !== undefined && !isFetching else nofavs">
   <div *ngFor="let item of likedItems let i = index">
     <img src="{{item.imageUrl}}">
     <p class="item-caption">{{item.id}}</p>
     <p class="item-caption">€ {{item.price}}</p>
     <i (click)="itemRemoved(i)" class="custom-icons" [ngClass]="item.like === true ? 'i-heart-fill' :  'i-heart'"></i>
   </div>
+</ng-container>
+<ng-template #nofavs>
+<p *ngIf="!isFetching">No items favourited</p>
+</ng-template>
 </div>

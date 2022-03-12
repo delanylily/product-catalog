@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../category.service';
+import { ItemsService } from '../favourites/services/items.service';
 
 @Component({
   selector: 'app-add-item',
@@ -12,7 +14,7 @@ export class AddItemComponent implements OnInit {
   categories: Array<any>;
   colors: Array<any>;
   sizes: Array<any>;
-  constructor(private categoryService: CategoryService) {
+  constructor(private itemsService: ItemsService, private http: HttpClient, private categoryService: CategoryService) {
     this.categories = categoryService.categories;
     this.colors = categoryService.colors;
     this.sizes = categoryService.sizes;
@@ -30,7 +32,7 @@ export class AddItemComponent implements OnInit {
 
   addItem({ value, valid }: { value: any, valid: boolean }): void {
     if (valid) {
-      this.categoryService.addItem(value);
+      this.itemsService.addAndStoreItems(value)
     }
   }
 }

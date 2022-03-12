@@ -25,9 +25,14 @@
       </div>
     </nav>
   </div>
+  <button class="btn btn-primary">Activate</button>
   <search-filter class="search" [placeholder]="'Search'" [value]="''" (changeEvent)="onSearchUpdated($event)">
   </search-filter>
+  <ng-template #loading>
+    <p *ngIf="isFetching">Loading Items...</p>
+   </ng-template>
   <div class="item-box">
+    <ng-container *ngIf="items !== undefined && !isFetching" else loading>
     <div class="item-card" *ngFor="let item of items let i = index">
       <img src="{{item.imageUrl}}">
       <p class="item-caption">{{item.id}}</p>
@@ -35,5 +40,6 @@
       <!-- <i (click)="itemLiked(i)" class="custom-icons" [ngClass]="likeToggle === true ? 'i-heart-fill' :  'i-heart'"></i> -->
       <i (click)="itemLiked(i)" class="custom-icons" [ngClass]="item.like === true ? 'i-heart-fill' :  'i-heart'"></i>
     </div>
+  </ng-container>
   </div>
 </div>

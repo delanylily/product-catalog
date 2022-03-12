@@ -31,7 +31,6 @@ import { ProductFormComponent } from './products/product-form/product-form.compo
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddItemComponent } from './add-item/add-item.component';
-import { FavouritesComponent } from './favourites/favourites.component';
 const app = initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
@@ -48,7 +47,6 @@ const app = initializeApp(environment.firebaseConfig);
     ProductFormComponent,
     SearchFilterComponent,
     SearchFilterComponent,
-    FavouritesComponent,
     AddItemComponent
   ],
   imports: [
@@ -72,10 +70,14 @@ const app = initializeApp(environment.firebaseConfig);
         ]
 
       },
+      {
+        path: 'favourites',
+        loadChildren: () => import('../app/favourites/favourites.module').then(m => m.FavouritesModule)
+      },
 
       // { path: 'new-product', component: ProductFormComponent, canActivate: [AuthGuard] },
       { path: 'shopping-cart', component: ShoppingCartComponent },
-      { path: 'favourites', component: FavouritesComponent },
+      // { path: 'favourites', component: FavouritesComponent },
       { path: 'add-item', component: AddItemComponent },
       { path: 'login', component: LoginComponent },
 

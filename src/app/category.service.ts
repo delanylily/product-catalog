@@ -1,14 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { child, get, getDatabase, onValue, orderByChild, push, query, ref, set, update } from 'firebase/database';
+import { getDatabase, onValue, ref, set, update } from 'firebase/database';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Item } from './interfaces/item';
 import { Categories } from './models/categories';
 import * as firebase from "firebase/auth";
 import { categories, colors, sizes } from './app.constants';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { HotToastService } from '@ngneat/hot-toast';
 
 @Injectable({
@@ -26,6 +24,7 @@ export class CategoryService {
   newIndex: number;
   clothes = new Subject();
   app = initializeApp(environment.firebaseConfig);
+  activatedEmitter = new Subject<boolean>();
 
   constructor(private toast: HotToastService) {
     this.categories = categories;

@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Item } from '../interfaces/item';
 import { CategoryService } from '../category.service';
 import { getDatabase, ref, set } from "firebase/database";
+import { filter, map } from 'rxjs/operators';
+import { ItemsService } from '../favourites/services/items.service';
 
 @Component({
   selector: 'app-home',
@@ -21,22 +23,20 @@ export class HomeComponent implements OnInit {
   indexActive: number = 0;
   updatedData: any;
   likeToggle: boolean;
-  constructor(private categoryService: CategoryService) { }
+  isFetching = false;
+  constructor(private categoryService: CategoryService, private itemsService: ItemsService) { }
 
   ngOnInit(): void {
-    this.categoryService.getResults().subscribe((clothes) => {
-      this.items = clothes;
-      this.items.map((item => {
-        this.likeToggle = item.like;
-        console.log(this.items, 'items')
-      }))
-    })
+    this.getItems();
   }
 
   getItems(): void {
-    this.categoryService.getResults().subscribe((clothes) => {
-      this.items = clothes;
-    })
+    this.isFetching = true;
+    this.itemsService.fetchItems()
+      .subscribe(items => {
+        this.items = items;
+        this.isFetching = false;
+      })
   }
 
   filterCategory(value: any) {

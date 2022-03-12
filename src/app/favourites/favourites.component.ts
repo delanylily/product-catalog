@@ -1,5 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CategoryService } from '../category.service';
+import { ItemsService } from './services/items.service';
 
 @Component({
   selector: 'app-favourites',
@@ -7,34 +11,26 @@ import { CategoryService } from '../category.service';
   styleUrls: ['./favourites.component.less']
 })
 export class FavouritesComponent implements OnInit {
-  likedItems = [];
+  likedItems: any;
   likeToggle: boolean;
-  constructor(private categoryService: CategoryService) { }
-
-  ngOnInit() {
-    // this.getResults();
-    this.categoryService.getResults().subscribe((items) => {
-      const allItems = items;
-      allItems.filter((item => {
-        if (item.like) {
-          this.likedItems = [];
-          this.likedItems.push(item);
-        }
-        console.log(this.likedItems, 'sdfs')
-      }))
-    })
+  userActivated: boolean;
+  clothesSubscription: Subscription;
+  isFetching = false;
+  constructor(private categoryService: CategoryService, private itemsService: ItemsService, private http: HttpClient) {
   }
 
-  getResults(): void {
-    this.categoryService.getResults().subscribe((items) => {
-      const allItems = items;
-      allItems.filter((item => {
-        if (item.like) {
-          this.likedItems = [];
-          this.likedItems.push(item);
-        }
+  ngOnInit() {
+    this.getItems();
+  }
+
+  getItems() {
+    this.isFetching = true;
+    this.itemsService.fetchItems()
+      .pipe(map(items => {
+        this.likedItems = items.filter(item => item.like);
       }))
-    })
+      .subscribe();
+    this.isFetching = false;
   }
 
   itemRemoved(index): void {
@@ -42,6 +38,5 @@ export class FavouritesComponent implements OnInit {
     this.likeToggle = this.likedItems[index].like;
     this.categoryService.updateItem(this.likedItems, index, this.likeToggle);
     this.likedItems.splice(index);
-    console.log(this.likedItems, 'removed')
   }
 }
