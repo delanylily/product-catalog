@@ -32,6 +32,7 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddItemComponent } from './add-item/add-item.component';
 import { AuthComponent } from './auth/auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 const app = initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ const app = initializeApp(environment.firebaseConfig);
     SearchFilterComponent,
     SearchFilterComponent,
     AddItemComponent,
-    AuthComponent
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
