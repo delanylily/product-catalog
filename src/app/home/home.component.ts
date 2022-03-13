@@ -13,7 +13,7 @@ import { ItemsService } from '../favourites/services/items.service';
 export class HomeComponent implements OnInit {
   // apparel: Item[];\
   filterText: string;
-  newArray: any;
+  newArray = [];
   category = '';
   categories = [];
   filterButtonValue: string;
@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   updatedData: any;
   likeToggle: boolean;
   isFetching = false;
+  selectedItem: Item;
   constructor(private categoryService: CategoryService, private itemsService: ItemsService) { }
 
   ngOnInit(): void {
@@ -40,14 +41,14 @@ export class HomeComponent implements OnInit {
   }
 
   filterCategory(value: any) {
-    this.filterButtonValue = value;
-    this.onSearchUpdated(this.filterButtonValue);
+    this.onSearchUpdated(value);
   }
 
   itemLiked(index): void {
-    this.items[index].like = !this.items[index].like;
-    this.likeToggle = this.items[index].like;
-    this.categoryService.updateItem(this.items, index, this.likeToggle)
+    this.selectedItem = this.items[index];
+    this.selectedItem.like = !this.selectedItem.like;
+    this.likeToggle = this.selectedItem.like;
+    this.categoryService.updateItem(this.selectedItem, this.likeToggle)
   }
 
 
@@ -61,8 +62,15 @@ export class HomeComponent implements OnInit {
 
   onSearchUpdated(event): void {
     this.filterText = event;
-    this.newArray = [];
-    this.newArray = this.items.filter(item => this.filterText === item.category || this.filterText === item.colour)
-    this.search();
+    this.itemsService.fetchItems()
+      .pipe(map(items => {
+        this.newArray = items.filter(item => item.category === this.filterText);
+        console.log(this.newArray, 'filtered')
+        this.items = this.newArray;
+      }))
+      .subscribe();
+    // this.newArray = [];
+    // this.newArray = this.items.filter(item => this.filterText === item.category || this.filterText === item.colour)
+    // this.search();
   }
 }

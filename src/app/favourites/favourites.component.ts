@@ -16,6 +16,7 @@ export class FavouritesComponent implements OnInit {
   userActivated: boolean;
   clothesSubscription: Subscription;
   isFetching = false;
+  selectedItem: any;
   constructor(private categoryService: CategoryService, private itemsService: ItemsService, private http: HttpClient) {
   }
 
@@ -34,9 +35,10 @@ export class FavouritesComponent implements OnInit {
   }
 
   itemRemoved(index): void {
-    this.likedItems[index].like = !this.likedItems[index].like;
-    this.likeToggle = this.likedItems[index].like;
-    this.categoryService.updateItem(this.likedItems, index, this.likeToggle);
+    this.selectedItem = this.likedItems[index];
+    this.selectedItem.like = !this.selectedItem.like;
+    this.likeToggle = this.selectedItem.like;
+    this.categoryService.updateItem(this.selectedItem, this.likeToggle);
     this.likedItems.splice(index);
   }
 }

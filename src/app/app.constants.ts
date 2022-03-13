@@ -16,6 +16,8 @@ export const colors = [
   { value: 'pink', name: 'Pink' },
   { value: 'blue', name: 'Blue' },
   { value: 'green', name: 'Green' },
+  { value: 'navy', name: 'Navy' },
+
 ];
 
 export const sizes = [

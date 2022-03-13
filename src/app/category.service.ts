@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, onValue, ref, set, update } from 'firebase/database';
+import { child, getDatabase, onValue, push, ref, set, update } from 'firebase/database';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Item } from './interfaces/item';
@@ -35,17 +35,17 @@ export class CategoryService {
     this.db = getDatabase();
     this.dbRef = ref(this.db);
 
-    onValue(this.dbRef, (snapshot) => {
-      if (snapshot !== undefined) {
-        snapshot.forEach((childSnapshot) => {
-          this.childKey = childSnapshot.key;
-          this.clothes.next(childSnapshot.val());
-        })
-      }
-    },
-      {
-        onlyOnce: true
-      })
+    // onValue(this.dbRef, (snapshot) => {
+    //   if (snapshot !== undefined) {
+    //     snapshot.forEach((childSnapshot) => {
+    //       this.childKey = childSnapshot.key;
+    //       this.clothes.next(childSnapshot.val());
+    //     })
+    //   }
+    // },
+    //   {
+    //     onlyOnce: true
+    //   })
 
   }
 
@@ -64,18 +64,19 @@ export class CategoryService {
     return this.clothes;
   }
 
-  updateItem(items: any, index: number, likeToggle: boolean) {
-    console.log(items, 'cl')
+  updateItem(selectedItem: any, likeToggle: boolean) {
     const itemData = {
-      category: items[index].category,
-      color: items[index].color,
-      id: items[index].id,
-      imageUrl: items[index].imageUrl,
-      like: items[index].like = likeToggle,
-      size: items[index].size
+      category: selectedItem.category,
+      color: selectedItem.color,
+      id: selectedItem.id,
+      imageUrl: selectedItem.imageUrl,
+      like: selectedItem.like = likeToggle,
+      size: selectedItem.size
     }
     const updates = {};
-    updates['/Items/' + index] = itemData;
+
+    updates['/posts/' + selectedItem.id] = itemData;
+
     return update(ref(this.db), updates)
       .then(() => {
         console.log('saved succesfully')
@@ -87,31 +88,31 @@ export class CategoryService {
   }
 
 
-  addItem(item): void {
-    onValue(this.dbRef, (snapshot) => {
-      if (snapshot !== undefined) {
-        snapshot.forEach((childSnapshot) => {
-          this.childKey = childSnapshot.key;
-          const items = childSnapshot.val();
-          if (items !== undefined) {
-            this.newIndex = items.length;
-            set(ref(this.db, 'Items/' + 0), {
-              category: item.category,
-              color: item.color,
-              id: 'coat1',
-              imageUrl: item.imageUrl,
-              size: item.size,
-              like: false
-            })
-          }
-          console.log(items, 'clottthes', this.newIndex);
-        })
-      }
-    },
-      {
-        onlyOnce: true
-      })
-  }
+  // addItem(item): void {
+  //   onValue(this.dbRef, (snapshot) => {
+  //     if (snapshot !== undefined) {
+  //       snapshot.forEach((childSnapshot) => {
+  //         this.childKey = childSnapshot.key;
+  //         const items = childSnapshot.val();
+  //         if (items !== undefined) {
+  //           this.newIndex = items.length;
+  //           set(ref(this.db, 'Items/' + 0), {
+  //             category: item.category,
+  //             color: item.color,
+  //             id: 'coat1',
+  //             imageUrl: item.imageUrl,
+  //             size: item.size,
+  //             like: false
+  //           })
+  //         }
+  //         console.log(items, 'clottthes', this.newIndex);
+  //       })
+  //     }
+  //   },
+  //     {
+  //       onlyOnce: true
+  //     })
+  // }
 
 
 

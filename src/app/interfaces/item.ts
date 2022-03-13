@@ -1,5 +1,6 @@
 export interface Item {
   item: string;
+  category?: string;
   price: number;
   like?: boolean;
   colour: string;
