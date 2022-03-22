@@ -26,13 +26,14 @@ const auth = getAuth();
 import { initializeApp } from "firebase/app";
 import { UserService } from './services/user.service';
 import { CategoryService } from './category.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddItemComponent } from './add-item/add-item.component';
 import { AuthComponent } from './auth/auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { AuthInterceptorService } from './auth/auth/auth-interceptor.service';
 const app = initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ const app = initializeApp(environment.firebaseConfig);
     NgbModule,
     RouterModule.forRoot([
       // { path: '', component: HomeComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: '', component: HomeComponent },
+      { path: 'home', component: HomeComponent },
 
 
       {
@@ -101,6 +102,7 @@ const app = initializeApp(environment.firebaseConfig);
     AuthGuard,
     UserService,
     CategoryService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

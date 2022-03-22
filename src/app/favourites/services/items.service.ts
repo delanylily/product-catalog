@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { exhaustMap, map, take } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Item } from 'src/app/interfaces/item';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { Item } from 'src/app/interfaces/item';
 })
 export class ItemsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   addAndStoreItems(content: any) {
     const itemData: Item = content;
@@ -20,8 +21,9 @@ export class ItemsService {
   }
 
   fetchItems() {
-    return this.http.get<{ [key: string]: Item }>('https://local-shop-9c674-default-rtdb.europe-west1.firebasedatabase.app/posts.json')
-      .pipe(map(response => {
+    return this.http.get<{ [key: string]: Item }>('https://local-shop-9c674-default-rtdb.europe-west1.firebasedatabase.app/posts.json',
+    ).pipe(
+      (map(response => {
         const itemsArray: Item[] = [];
         for (const key in response) {
           if (response.hasOwnProperty(key)) {
@@ -30,6 +32,20 @@ export class ItemsService {
         }
         return itemsArray;
       }))
+    )
   }
+
+  // fetchItems() {
+  //   return this.http.get<{ [key: string]: Item }>('https://local-shop-9c674-default-rtdb.europe-west1.firebasedatabase.app/posts.json')
+  //     .pipe(map(response => {
+  //       const itemsArray: Item[] = [];
+  //       for (const key in response) {
+  //         if (response.hasOwnProperty(key)) {
+  //           itemsArray.push({ ...response[key], id: key })
+  //         }
+  //       }
+  //       return itemsArray;
+  //     }))
+  // }
 }
 
